@@ -1,0 +1,6 @@
+target_convert
+
+clean:
+	@rm -f target_convert
+
+.PHONY: clean
