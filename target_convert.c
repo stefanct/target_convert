@@ -5,6 +5,11 @@
 #include <stdint.h>
 #include <stdlib.h>
 
+#if _WIN32
+#include <fcntl.h>
+#include <io.h>
+#endif
+
 void usage(char *prog) {
     fprintf(stderr,
             "%s -e|-d < infile > outfile\n"
@@ -17,6 +22,12 @@ void usage(char *prog) {
 
 int main (int argc, char **argv)
 {
+
+#if _WIN32
+    _setmode(_fileno(stdin), _O_BINARY);
+    _setmode(_fileno(stdout), _O_BINARY);
+#endif
+
     if (argc != 2 || argv[1][0] != '-' || argv[1][2] != '\0' || (argv[1][1] != 'd' && argv[1][1] != 'e'))
         usage(argv[0]);
 
